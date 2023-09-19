@@ -1,0 +1,53 @@
+# Set your Google Maps API key
+api_key <- ""
+
+# Define the destination location
+destination <- c(33.79597809679248, -118.193353757672)  # Northgate market
+
+# Calculate walking distance and time to the destination for each location
+result <- data.frame()
+
+for (i in 1:nrow(all_random_points)) {
+  location <- c(all_random_points$latitude[i], all_random_points$longitude[i])
+  
+  # Calculate walking distance and time to the destination
+  tryCatch({
+    destination_result <- google_directions(
+      origin = location,
+      destination = destination,
+      mode = "walking",
+      key = api_key
+    )
+    
+    walking_distance_km <- destination_result$routes$legs[[1]]$distance$value / 1000  # Convert meters to kilometers
+    walking_distance_miles <- walking_distance_km * 0.621371  # Convert kilometers to miles
+    walking_distance <- paste0(format(walking_distance_miles, nsmall = 2), " mi")
+    
+    walking_time <- destination_result$routes$legs[[1]]$duration$text
+    
+    # Create a data frame with the results
+    location_result <- data.frame(
+      Section = all_random_points$Section[i],
+      Latitude = all_random_points$latitude[i],
+      Longitude = all_random_points$longitude[i],
+      Walking_Distance = walking_distance,
+      Walking_Time = walking_time
+    )
+    
+    # Append the results to the 'result' data frame
+    result <- rbind(result, location_result)
+  }, error = function(e) {
+    cat("Error occurred for location:", i, "\n")
+    cat("Latitude:", all_random_points$latitude[i], "\n")
+    cat("Longitude:", all_random_points$longitude[i], "\n\n")
+  })
+}
+
+# Print the results
+print(result)
+
+# Calculate the average distance in miles
+average_distance <- mean(as.numeric(gsub(" mi", "", result$Walking_Distance)))
+
+# Print the average distance
+print(paste("Average distance:", round(average_distance, 2), "mi"))

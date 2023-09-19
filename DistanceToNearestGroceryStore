@@ -2,7 +2,7 @@
 library(googleway)
 
 # Step 2: Set your Google Maps API key
-api_key <- "AIzaSyDmwA45uQWzkDZdHVrmGWzz19-h6rGNXxM"
+api_key <- ""
 
 # Step 3: Prepare the dataset
 combined_data <- data.frame(

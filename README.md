@@ -1,5 +1,5 @@
 ## WashingtonTeam
-#Food Dessert
+Food Dessert
 Food Desert in Washington Neighborhood, Long Beach,Ca
 
 

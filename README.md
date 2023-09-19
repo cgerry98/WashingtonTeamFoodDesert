@@ -12,10 +12,10 @@ In this project what was worked on was testing to see if if the Washington neigh
 
 Low-income: a poverty rate of 20 percent or greater, or a median family income at or below 80 percent of the statewide or metropolitan area median family income;
 Low-access: at least 500 persons and/or at least 33 percent of the population lives more than 1 mile from a supermarket or large grocery store (10 miles, in the case of rural census tracts).
-Data on population and income come from the 2000 Census of Population and Housing."
+Data on population and income come from the 2000 Census of Population and Housing" (Ploeg, 2011).
 
 So we would need to simulate 500 random points in the region to make a statement that the region is a food desert.
 
 We found out the average distance of the 500 residents are within 1 mile of a grocery store making the neighborhood a non food desert area. 
 
-Mapping Food Deserts in the United States. USDA ERS - Data Feature: Mapping Food Deserts in the U.S. (2011a, December 1). https://www.ers.usda.gov/amber-waves/2011/december/data-feature-mapping-food-deserts-in-the-us/ 
+Ploeg, M. V. (2011, December 1). Mapping Food Deserts in the United States. USDA ERS - Data Feature: Mapping Food Deserts in the U.S. https://www.ers.usda.gov/amber-waves/2011/december/data-feature-mapping-food-deserts-in-the-us/ 

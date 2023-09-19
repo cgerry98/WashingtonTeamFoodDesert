@@ -1,0 +1,126 @@
+# Step 1: Install and load necessary packages
+library(googleway)
+
+# Step 2: Set your Google Maps API key
+api_key <- "AIzaSyDmwA45uQWzkDZdHVrmGWzz19-h6rGNXxM"
+
+# Step 3: Prepare the dataset
+combined_data <- data.frame(
+  latitude = c(33.78731, 33.78912, 33.78775, 33.78946, 33.78967, 33.78643, 33.78818, 33.78949, 33.78826, 33.78792,
+               33.78590, 33.78518, 33.78500, 33.78628, 33.78505, 33.78524, 33.78464, 33.78483, 33.78372, 33.78320,
+               33.78675, 33.78773, 33.78773, 33.78757, 33.78678, 33.78673, 33.78707, 33.78792, 33.78719, 33.78934,
+               33.78504, 33.78296, 33.78402, 33.78361, 33.78559, 33.78425, 33.78557, 33.78558, 33.78552, 33.78422),
+  longitude = c(-118.1973, -118.2011, -118.1994, -118.2002, -118.2037, -118.1977, -118.2027, -118.2042, -118.2020, -118.1973,
+                -118.1973, -118.1978, -118.1994, -118.1986, -118.2044, -118.2010, -118.1988, -118.2029, -118.2022, -118.2028,
+                -118.1967, -118.1937, -118.1910, -118.1961, -118.1928, -118.1955, -118.1961, -118.1914, -118.1903, -118.1942,
+                -118.1914, -118.1923, -118.1917, -118.1970, -118.1935, -118.1954, -118.1942, -118.1924, -118.1944, -118.1962),
+  section = c("Section 1", "Section 1", "Section 1", "Section 1", "Section 1", "Section 1", "Section 1", "Section 1", "Section 1", "Section 1",
+              "Section 2", "Section 2", "Section 2", "Section 2", "Section 2", "Section 2", "Section 2", "Section 2", "Section 2", "Section 2",
+              "Section 3", "Section 3", "Section 3", "Section 3", "Section 3", "Section 3", "Section 3", "Section 3", "Section 3", "Section 3",
+              "Section 4", "Section 4", "Section 4", "Section 4", "Section 4", "Section 4", "Section 4", "Section 4", "Section 4", "Section 4")
+)
+
+# Step 4: Define the destination location
+destination <- c(33.79597809679248, -118.193353757672)
+#Northgate market
+# Step 5: Calculate walking distance and time to the destination for each location
+result <- data.frame()
+
+for (i in 1:nrow(combined_data)) {
+  location <- c(combined_data$latitude[i], combined_data$longitude[i])
+  
+  # Calculate walking distance and time to the destination
+  tryCatch({
+    destination_result <- google_directions(
+      origin = location,
+      destination = destination,
+      mode = "walking",
+      key = api_key
+    )
+    
+    walking_distance_km <- destination_result$routes$legs[[1]]$distance$value / 1000  # Convert meters to kilometers
+    walking_distance_miles <- walking_distance_km * 0.621371  # Convert kilometers to miles
+    walking_distance <- paste0(format(walking_distance_miles, nsmall = 2), " mi")
+    
+    walking_time <- destination_result$routes$legs[[1]]$duration$text
+    
+    # Create a data frame with the results
+    location_result <- data.frame(
+      section = combined_data$section[i],
+      walking_distance = walking_distance,
+      walking_time = walking_time
+    )
+    
+    # Append the results to the 'result' data frame
+    result <- rbind(result, location_result)
+  }, error = function(e) {
+    cat("Error occurred for location:", i, "\n")
+    cat("Latitude:", combined_data$latitude[i], "\n")
+    cat("Longitude:", combined_data$longitude[i], "\n\n")
+  })
+}
+
+# Print the results
+
+print(result)
+
+
+# Calculate the average distance in miles
+average_distance <- mean(as.numeric(gsub(" mi", "", result$walking_distance)))
+
+# Print the average distance
+print(paste("Average distance:", round(average_distance, 2), "mi"))
+
+##Result:
+
+print(result)
+     section walking_distance walking_time
+1  Section 1      0.797219 mi      18 mins
+2  Section 1     0.9053375 mi      21 mins
+3  Section 1      0.896017 mi      21 mins
+4  Section 1     0.8301517 mi      19 mins
+5  Section 1      1.022777 mi      24 mins
+6  Section 1     0.8935315 mi      20 mins
+7  Section 1      1.052602 mi      24 mins
+8  Section 1      1.053224 mi      24 mins
+9  Section 1      1.012213 mi      23 mins
+10 Section 1     0.7611795 mi      18 mins
+11 Section 2     0.9065803 mi      21 mins
+12 Section 2     0.9799021 mi      22 mins
+13 Section 2      1.091749 mi      25 mins
+14 Section 2     0.9581541 mi      22 mins
+15 Section 2      1.376337 mi      31 mins
+16 Section 2       1.17377 mi      27 mins
+17 Section 2      1.072486 mi      25 mins
+18 Section 2      1.308607 mi      30 mins
+19 Section 2       1.33719 mi      31 mins
+20 Section 2      1.403677 mi      32 mins
+21 Section 3     0.8432004 mi      19 mins
+22 Section 3     0.5809819 mi      13 mins
+23 Section 3     0.7064988 mi      16 mins
+24 Section 3     0.7412956 mi      17 mins
+25 Section 3     0.6872363 mi      15 mins
+26 Section 3     0.7611795 mi      17 mins
+27 Section 3     0.8258021 mi      19 mins
+28 Section 3       0.69345 mi      15 mins
+29 Section 3      0.792248 mi      17 mins
+30 Section 3     0.5064174 mi      12 mins
+31 Section 4     0.8922888 mi      19 mins
+32 Section 4      0.968096 mi      21 mins
+33 Section 4     0.9382702 mi      21 mins
+34 Section 4      1.062544 mi      24 mins
+35 Section 4     0.7257613 mi      16 mins
+36 Section 4     0.9059589 mi      20 mins
+37 Section 4     0.7686359 mi      17 mins
+38 Section 4     0.7791992 mi      17 mins
+39 Section 4      0.780442 mi      17 mins
+40 Section 4     0.9705815 mi      22 mins
+> # Print the average distance
+> print(paste("Average distance:", round(average_distance, 2), "mi"))
+[1] "Average distance: 0.92 mi"
+> 
+
+
+
+
+

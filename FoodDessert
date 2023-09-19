@@ -1,0 +1,337 @@
+library(ggplot2)
+library(ggmap)
+
+#TopLeft
+# Step 1: Install and load necessary packages
+library(googleway)
+register_google(key = "")
+
+# Step 2: Set your Google Maps API key
+api_key <- ""
+
+
+# Define latitude and longitude boundaries
+boundary1 <- c(33.78988, -118.20441) # Top left
+boundary2 <- c(33.7898615, -118.19699) # Top Right
+boundary3 <- c(33.7863, -118.2045) # Bottom left
+boundary4 <- c(33.78627, -118.19702) # Bottom Right
+
+# Set the seed for reproducibility (optional)
+set.seed(123)
+
+# Generate 10 random locations
+random_latitude <- runif(10, min(boundary3[1], boundary4[1]), max(boundary1[1], boundary2[1]))
+random_longitude <- runif(10, min(boundary1[2], boundary3[2]), max(boundary2[2], boundary4[2]))
+
+# Create a data frame of random locations
+random_locations <- data.frame(latitude = random_latitude, longitude = random_longitude)
+
+# Format the results without truncating decimals
+formatted_results <- paste("(", format(random_locations$latitude, nsmall = 7), ", ", format(random_locations$longitude, nsmall = 7), ")", sep = "")
+
+# Print the formatted results
+print(formatted_results)
+# [1] "(33.7873082, -118.1973142)" "(33.7891158, -118.2010955)" "(33.7877464, -118.1994114)"
+# [4] "(33.7894577, -118.2001995)" "(33.7896651, -118.2037270)" "(33.7864345, -118.1977423)"
+# [7] "(33.7881765, -118.2026519)" "(33.7894916, -118.2041841)" "(33.7882607, -118.2020373)"
+# [10] "(33.7879184, -118.1973317)"
+# Store latitude and longitude coordinates separately in vectors
+latitude_r <- random_locations$latitude
+longitude_r <- random_locations$longitude
+
+# Print the latitude and longitude vectors
+print(latitude_r)
+print(longitude_r)
+
+
+library(ggmap)
+library(ggplot2)
+
+# Create a data frame with the latitude and longitude coordinates
+section1 <- data.frame(
+  latitude = c(33.7873082, 33.7891158, 33.7877464, 33.7894577, 33.7896651,
+               33.7864345, 33.7881765, 33.7894916, 33.7882607, 33.7879184),
+  longitude = c(-118.1973142, -118.2010955, -118.1994114, -118.2001995, -118.2037270,
+                -118.1977423, -118.2026519, -118.2041841, -118.2020373, -118.1973317)
+)
+
+# Get the map using the Google Maps API
+map <- get_googlemap(center = c(lon = mean(section1$longitude),
+                                lat = mean(section1$latitude)),
+                     zoom = 15,
+                     scale = 2,
+                     maptype = "roadmap")
+
+# Plot the map
+ggmap(map) +
+  geom_point(data = section1, aes(x = longitude, y = latitude), color = "purple", size = 3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Random generator for the bottom left area
+
+# Define latitude and longitude boundaries
+boundary1 <- c(33.7863, -118.2045)#Top left
+boundary2 <- c(33.78627, -118.19702)#Top Right
+boundary3 <- c(33.782731, -118.204586)#Bottom left
+boundary4 <- c(33.78267, -118.19705)#Bottom Right
+
+
+
+
+
+
+library(ggmap)
+library(ggplot2)
+
+
+
+# Generate 10 random locations
+random_latitude <- runif(10, min(boundary3[1], boundary4[1]), max(boundary1[1], boundary2[1]))
+random_longitude <- runif(10, min(boundary1[2], boundary3[2]), max(boundary2[2], boundary4[2]))
+
+# Create a data frame of random locations
+random_locations <- data.frame(latitude = random_latitude, longitude = random_longitude)
+
+# Print the random locations
+print(random_locations)
+
+
+# Format the results with parentheses
+formatted_results <- paste("(", random_locations$latitude, ", ", random_locations$longitude, ")", sep = "")
+
+# Print the formatted results
+print(formatted_results)
+#Results
+
+
+
+
+
+section2 <- data.frame(
+  latitude = c(33.7858990277173, 33.7851848763643, 33.784995039734, 33.7862791992891, 33.7850502120508,
+               33.7852419655994, 33.7846449596697, 33.7848267355342, 33.7837196498464, 33.7832040225397),
+  longitude = c(-118.197299758657, -118.197759205425, -118.199360123863, -118.198567493518, -118.204399772863,
+                -118.200970995683, -118.198847495139, -118.202948657557, -118.202178642496, -118.202833519308)
+)
+
+# Get the map using the Google Maps API
+map <- get_googlemap(center = c(lon = mean(section2$longitude), 
+                                lat = mean(section2$latitude)),
+                     zoom = 16,
+                     scale = 2,
+                     maptype = "roadmap",
+                     key = api_key)
+
+# Plot the map
+ggmap(map) +
+  geom_point(data = section2, aes(x = longitude, y = latitude), color = "red", size = 3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Random generator for the top right area
+
+# Define latitude and longitude boundaries
+boundary1 <- c(33.78986, -118.19699)#Top left
+boundary2 <- c(33.789842, -118.189566)#Top Right
+boundary3 <- c(33.78627, -118.19702)#Bottom left
+boundary4 <- c(33.786228, -118.1895445)#Bottom Right
+
+
+
+
+
+
+
+
+
+# Generate 10 random locations
+random_latitude <- runif(10, min(boundary3[1], boundary4[1]), max(boundary1[1], boundary2[1]))
+random_longitude <- runif(10, min(boundary1[2], boundary3[2]), max(boundary2[2], boundary4[2]))
+
+# Create a data frame of random locations
+random_locations <- data.frame(latitude = random_latitude, longitude = random_longitude)
+
+# Print the random locations
+print(random_locations)
+
+
+# Format the results with parentheses
+formatted_results <- paste("(", random_locations$latitude, ", ", random_locations$longitude, ")", sep = "")
+
+# Print the formatted results
+print(formatted_results)
+#Results
+# [1] "(33.7867466496813, -118.196677389114)" "(33.7877336322917, -118.193714333345)"
+# [3] "(33.7877306467531, -118.191047637316)" "(33.7875676466778, -118.196108742082)"
+# [5] "(33.7867816793238, -118.192826633347)" "(33.7867321436224, -118.195476074597)"
+# [7] "(33.7870743798492, -118.196066637149)" "(33.7879203756193, -118.19138864706)" 
+# [9] "(33.7871940126298, -118.190329088418)" "(33.7893436302621, -118.194220703519)"
+
+# Create a data frame with the latitude and longitude coordinates
+section3 <- data.frame(
+  latitude = c(33.7867466496813, 33.7877336322917, 33.7877306467531, 33.7875676466778, 33.7867816793238,
+               33.7867321436224, 33.7870743798492, 33.7879203756193, 33.7871940126298, 33.7893436302621),
+  longitude = c(-118.196677389114, -118.193714333345, -118.191047637316, -118.196108742082, -118.192826633347,
+                -118.195476074597, -118.196066637149, -118.19138864706, -118.190329088418, -118.194220703519)
+)
+
+# Get the map using the Google Maps API
+map <- get_googlemap(center = c(lon = mean(section3$longitude),
+                                lat = mean(section3$latitude)),
+                     zoom = 15,
+                     scale = 2,
+                     maptype = "roadmap")
+
+# Plot the map
+ggmap(map) +
+  geom_point(data = section3, aes(x = longitude, y = latitude), color = "yellow", size = 3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Random generator for the bottom right area
+
+# Define latitude and longitude boundaries
+boundary1 <- c(33.78627, -118.19702)#Top left
+boundary2 <- c(33.786228, -118.1895445)#Top Right
+boundary3 <- c(33.7826725, -118.1970545)#Bottom left
+boundary4 <- c(33.78261, -118.18952)#Bottom Right
+
+
+
+
+
+
+
+
+
+# Generate 10 random locations
+random_latitude <- runif(10, min(boundary3[1], boundary4[1]), max(boundary1[1], boundary2[1]))
+random_longitude <- runif(10, min(boundary1[2], boundary3[2]), max(boundary2[2], boundary4[2]))
+
+# Create a data frame of random locations
+random_locations <- data.frame(latitude = random_latitude, longitude = random_longitude)
+
+# Print the random locations
+print(random_locations)
+
+
+# Format the results with parentheses
+formatted_results <- paste("(", random_locations$latitude, ", ", random_locations$longitude, ")", sep = "")
+
+# Print the formatted results
+print(formatted_results)
+#Results
+
+# [1] "(33.7850443216123, -118.191369906917)" "(33.782957116819, -118.192313633384)" 
+# [3] "(33.7840153288743, -118.191703630697)" "(33.7836142441391, -118.197049792645)"
+# [5] "(33.7855915825423, -118.193473227272)" "(33.7842515698095, -118.19539601426)" 
+# [7] "(33.7855748355322, -118.194192772297)" "(33.7855833456048, -118.192437576876)"
+# [9] "(33.7855172928953, -118.194403878653)" "(33.7842197839766, -118.196217150145)"
+
+
+
+
+
+
+
+
+# Create a data frame with the latitude and longitude coordinates
+section4 <- data.frame(
+  latitude = c(33.7850443216123, 33.782957116819, 33.7840153288743, 33.7836142441391, 33.7855915825423,
+               33.7842515698095, 33.7855748355322, 33.7855833456048, 33.7855172928953, 33.7842197839766),
+  longitude = c(-118.191369906917, -118.192313633384, -118.191703630697, -118.197049792645, -118.193473227272,
+                -118.19539601426, -118.194192772297, -118.192437576876, -118.194403878653, -118.196217150145)
+)
+
+# Get the map using the Google Maps API
+map <- get_googlemap(center = c(lon = mean(section4$longitude),
+                                lat = mean(section4$latitude)),
+                     zoom = 15,
+                     scale = 2,
+                     maptype = "roadmap")
+
+# Plot the map and the combined data with distinct colors for each section
+ggmap(map) +
+  geom_point(data = random_locations, aes(x = longitude, y = latitude), color = "green", size = 3)
+
+
+
+
+
+
+
+
+library(dplyr)
+
+# Assuming you have four data frames named section1, section2, section3, and section4
+# Each data frame contains the columns "Location" (location name), "Latitude", and "Longitude"
+
+
+
+# Add a "Section" column to each data frame to represent the section
+section1$Section <- "Section 1"
+section2$Section <- "Section 2"
+section3$Section <- "Section 3"
+section4$Section <- "Section 4"
+
+# Define a color palette for the sections
+section_colors <- c("Section 1" = "red", "Section 2" = "blue", "Section 3" = "green", "Section 4" = "orange")
+
+# Combine the data frames into a single data frame
+combined_data <- bind_rows(section1, section2, section3, section4)
+
+
+
+# Get the map using the Google Maps API
+map <- get_googlemap(center = c(lon = mean(combined_data$longitude),
+                                lat = mean(combined_data$latitude)),
+                     zoom = 15,
+                     scale = 2,
+                     maptype = "roadmap")
+
+# Plot the map and the combined data with distinct colors for each section
+ggmap(map) +
+  geom_point(data = combined_data, aes(x = longitude, y = latitude, color = Section), size = 3) +
+  scale_color_manual(values = section_colors)
+
+
